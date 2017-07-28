@@ -1,6 +1,7 @@
 import pymongo
 from flask import Flask
 from flask_restful import Api
+from .resources.mock import mock
 
 app = Flask(__name__)
 api = Api(app)
@@ -12,5 +13,5 @@ client = pymongo.MongoClient("mongodb://xrodneylee:xrodneylee@ \
                                         ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
 db = client['azure-billing']
 
-# collectionOfUsage = db.usage
-# collectionOfRatecard = db.ratecard
+# restful api
+api.add_resource(mock, '/mock') # , '/mock/<str:id>'
