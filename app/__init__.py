@@ -1,7 +1,7 @@
 import pymongo
 from flask import Flask
 from flask_restful import Api
-from .resources.mock import mock
+from .resources.mock import Mock
 
 app = Flask(__name__)
 api = Api(app)
