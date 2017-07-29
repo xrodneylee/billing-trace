@@ -30,9 +30,11 @@ class AzureCredential:
 
 class AzureUsage():
 
-    def __init__(self, token=None, subscription=None):
+    def __init__(self, token=None, subscription=None, reported_start_time=None, reported_end_time=None):
         self.token = token
         self.subscription = subscription
+        self.reported_start_time = reported_start_time
+        self.reported_end_time = reported_end_time
 
     def invoke(self):
         url = 'https://management.azure.com/subscriptions/' \
@@ -44,8 +46,8 @@ class AzureUsage():
         }
         params = {
             'api-version': '2015-06-01-preview',
-            'reportedStartTime': '2017-03-22T00:00:00+00:00',
-            'reportedEndTime': '2017-03-23T00:00:00+00:00',
+            'reportedStartTime': self.reported_start_time,
+            'reportedEndTime': self.reported_end_time,
             'aggregationGranularity': 'Hourly',
             'showDetails': 'true'
         }
@@ -90,9 +92,3 @@ class AzureRatecard():
         response = requests.get(url, params=params, headers=header)
 
         return response
-
-
-# test
-credential = AzureCredential('472613e3-303b-4ae2-afc6-6a3b2d920675', 'e4ec2c26-7b68-4b31-9665-b6cdeceb78a3', 'tD0HJEdnovFZ9ytAINVsDZnriebhLZuGtrv46W2y0g8=')
-ratecard = AzureRatecard(credential.invoke().json()['access_token'], '08baa038-b64f-49f0-a084-7c22d1c1305c', 'MS-AZR-0025P')
-print(ratecard.invoke().text)
