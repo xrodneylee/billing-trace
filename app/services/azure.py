@@ -30,7 +30,8 @@ class AzureCredential:
 
 class AzureUsage():
 
-    def __init__(self, token=None, subscription=None, reported_start_time=None, reported_end_time=None):
+    def __init__(self, token=None, subscription=None,
+                 reported_start_time=None, reported_end_time=None):
         self.token = token
         self.subscription = subscription
         self.reported_start_time = reported_start_time
