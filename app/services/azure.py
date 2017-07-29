@@ -1,6 +1,6 @@
 import requests
 
-class Oauth:
+class AzureCredential:
 
     def __init__(self, tenant=None, client_id=None, client_secret=None):
         self.tenant = tenant
@@ -28,7 +28,7 @@ class Oauth:
 
         return response
 
-class Usage():
+class AzureUsage():
 
     def __init__(self, tenant=None, client_id=None, client_secret=None):
         self.tenant = tenant
@@ -37,8 +37,8 @@ class Usage():
 
     def invoke(self):
 
-        oauth = Oauth(self.tenant, self.client_id, self.client_secret)
-        token = oauth.invoke().json()['access_token']
+        azure_credential = AzureCredential(self.tenant, self.client_id, self.client_secret)
+        token = azure_credential.invoke().json()['access_token']
 
         url = 'https://management.azure.com/ \
                 subscriptions/08baa038-b64f-49f0-a084-7c22d1c1305c/ \
@@ -59,7 +59,7 @@ class Usage():
 
         return response
 
-class Ratecard():
+class AzureRatecard():
 
     def get(self):
         return 'guanpu'
