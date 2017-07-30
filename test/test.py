@@ -5,8 +5,7 @@ header = {
     'Content-Type': 'application/json'
 }
 data = {
-    "id": 123,
-    "tenant": "qq"
+    "tenant": "123456"
 }
 
 response = requests.post(url, json=data)
