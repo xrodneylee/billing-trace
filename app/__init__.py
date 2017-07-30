@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Api
 import requests
 from .resources.mock import Mock
-from .resources.settings import AzureConfig
+from .resources.settings import Tenant
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,4 +19,4 @@ db = client['azure-billing']
 api.add_resource(Mock, '/mock') # , '/mock/<str:id>'
 
 # settings
-api.add_resource(AzureConfig, '/azure-config')
+api.add_resource(Tenant, '/setting/tenant')
