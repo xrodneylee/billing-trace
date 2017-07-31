@@ -5,6 +5,8 @@ from bson.json_util import dumps
 
 parser = reqparse.RequestParser(trim=True)
 parser.add_argument('tenant', required=True, type=str, help='tenant cannot be blank')
+parser.add_argument('client_id', required=True, type=str, help='client_id cannot be blank')
+parser.add_argument('client_secret', required=True, type=str, help='client_secret cannot be blank')
 
 tenant_collection = db['tenant']
 subscription_collection = db['subscription']
@@ -29,7 +31,9 @@ class Tenant(Resource):
         if tenant_collection.find_one({"tenant": args['tenant']}):
             return {"response": "tenant already exists."}
         else:
-            tenant_collection.insert_one({'tenant': args['tenant']})
+            tenant_collection.insert_one({'tenant': args['tenant'],
+                                          'client_id': args['client_id'],
+                                          'client_secret': args['client_secret']})
             return dumps(tenant_collection.find_one({"tenant": args['tenant']}, {"_id": 0}))
 
     def delete(self, tenant=None):
@@ -37,11 +41,24 @@ class Tenant(Resource):
         """
         if tenant:
             tenant_collection.delete_one({"tenant": tenant})
+        else:
+            return {"response": "tenant doesn't exist."}
 
     def put(self):
         """update tenant
         """
-        return NotImplemented
+        args = parser.parse_args()
+
+        if tenant_collection.find_one({"tenant": args['tenant']}):
+            tenant_collection.update_one({"tenant": args['tenant']},
+                                         {"$set" : {
+                                             'client_id': args['client_id'],
+                                             'client_secret': args['client_secret']
+                                             }
+                                         })
+            return dumps(tenant_collection.find_one({"tenant": args['tenant']}, {"_id": 0}))
+        else:
+            return {"response": "tenant doesn't exist."}
 
 class Subscription(Resource):
     pass
