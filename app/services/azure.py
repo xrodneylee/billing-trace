@@ -78,10 +78,10 @@ class AzureRatecard():
         }
         params = {
             'api-version': '2016-08-31-preview',
-            '$filter': "OfferDurableId eq '{offer_durable_id}' \
-                        and Currency eq '{currency}' \
-                        and Locale eq '{locale}' \
-                        and RegionInfo eq '{region_info}' " \
+            '$filter': "OfferDurableId eq '{offer_durable_id}'" \
+                      + " and Currency eq '{currency}'" \
+                      + " and Locale eq '{locale}'" \
+                      + " and RegionInfo eq '{region_info}' " \
             .format(
                 offer_durable_id=self.offer_durable_id,
                 currency=self.currency,

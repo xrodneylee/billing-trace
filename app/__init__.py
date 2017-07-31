@@ -11,4 +11,4 @@ api = Api(app)
 api.add_resource(Mock, '/mock')
 
 # settings
-api.add_resource(Tenant, '/setting/tenant')
+api.add_resource(Tenant, '/setting/tenant', '/setting/tenant/<tenant>')
