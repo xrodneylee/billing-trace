@@ -67,11 +67,9 @@ class Subscription(Resource):
     def get(self, subscription=None):
         if subscription:
             return dumps(subscription_collection.find_one({"subscriptionId": subscription},
-                                                          {
-                                                              "subscriptionId": 1,
-                                                              "displayName": 1,
-                                                              "_id": 0
-                                                          }))
+                                                          {"subscriptionId": 1,
+                                                           "displayName": 1,
+                                                           "_id": 0}))
         else:
             return dumps(subscription_collection.find({}, {"subscriptionId": 1,
                                                            "displayName": 1,
