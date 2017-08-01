@@ -93,3 +93,23 @@ class AzureRatecard():
         response = requests.get(url, params=params, headers=header)
 
         return response
+
+class AzureSubscription():
+
+    def __init__(self, tenant=None, token=None):
+        self.tenant = tenant
+        self.token = token
+
+    def invoke(self):
+        url = 'https://management.azure.com/subscriptions/'
+        header = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + self.token
+        }
+        params = {
+            'api-version': '2015-01-01'
+        }
+
+        response = requests.get(url, params=params, headers=header)
+
+        return response

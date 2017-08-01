@@ -2,6 +2,7 @@
 from flask_restful import Resource, reqparse
 from config import db
 from bson.json_util import dumps
+from ..services.azure import AzureCredential, AzureSubscription
 
 parser = reqparse.RequestParser(trim=True)
 parser.add_argument('tenant', required=True, type=str, help='tenant cannot be blank')
@@ -60,5 +61,33 @@ class Tenant(Resource):
         else:
             return {"response": "tenant doesn't exist."}
 
+
 class Subscription(Resource):
-    pass
+    
+    def get(self, subscription=None):
+        if subscription:
+            return dumps(subscription_collection.find_one({"subscriptionId": subscription}, {"subscriptionId": 1, "displayName": 1, "_id": 0}))
+        else:
+            return dumps(subscription_collection.find({}, {"subscriptionId": 1, "displayName": 1,"_id": 0}))
+
+    def post(self):
+        args = parser.parse_args()
+
+        credential = AzureCredential(args['tenant'], args['client_id'], args['client_secret'])
+        token = credential.invoke().json()['access_token']
+        subscriptions = AzureSubscription(args['tenant'], token)
+        for document in subscriptions.invoke().json()['value']:
+            if subscription_collection.find_one({"subscriptionId": document['subscriptionId']}):
+                pass
+            else:
+                subscription_collection.insert_one(document)
+        return dumps(subscription_collection.find({}, {"subscriptionId": 1, "displayName": 1, "_id": 0}))
+
+    def delete(self, subscription=None):
+        if subscription:
+            subscription_collection.delete_one({"subscriptionId": subscription})
+        else:
+            return {"response": "subscriptionId doesn't exist."}
+
+    def put(self):
+        pass
