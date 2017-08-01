@@ -13,8 +13,7 @@ tenant_collection = db['tenant']
 subscription_collection = db['subscription']
 
 class Tenant(Resource):
-    """
-    Tenant restful api
+    """Tenant restful api
     """
     def get(self, tenant=None):
         """get single/all tenant
@@ -63,12 +62,20 @@ class Tenant(Resource):
 
 
 class Subscription(Resource):
-    
+    """Subscription restful api
+    """
     def get(self, subscription=None):
         if subscription:
-            return dumps(subscription_collection.find_one({"subscriptionId": subscription}, {"subscriptionId": 1, "displayName": 1, "_id": 0}))
+            return dumps(subscription_collection.find_one({"subscriptionId": subscription},
+                                                          {
+                                                              "subscriptionId": 1,
+                                                              "displayName": 1,
+                                                              "_id": 0
+                                                          }))
         else:
-            return dumps(subscription_collection.find({}, {"subscriptionId": 1, "displayName": 1,"_id": 0}))
+            return dumps(subscription_collection.find({}, {"subscriptionId": 1,
+                                                           "displayName": 1,
+                                                           "_id": 0}))
 
     def post(self):
         args = parser.parse_args()
@@ -81,7 +88,9 @@ class Subscription(Resource):
                 pass
             else:
                 subscription_collection.insert_one(document)
-        return dumps(subscription_collection.find({}, {"subscriptionId": 1, "displayName": 1, "_id": 0}))
+        return dumps(subscription_collection.find({}, {"subscriptionId": 1,
+                                                       "displayName": 1,
+                                                       "_id": 0}))
 
     def delete(self, subscription=None):
         if subscription:
