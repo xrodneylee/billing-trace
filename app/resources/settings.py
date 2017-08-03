@@ -9,6 +9,10 @@ parser.add_argument('tenant', required=True, type=str, help='tenant cannot be bl
 parser.add_argument('client_id', required=True, type=str, help='client_id cannot be blank')
 parser.add_argument('client_secret', required=True, type=str, help='client_secret cannot be blank')
 
+group_parser = reqparse.RequestParser(trim=True)
+group_parser.add_argument('groupName', required=True, type=str, help='groupName cannot be blank')
+group_parser.add_argument('subscriptions', required=True, type=str, help='subscriptions cannot be blank')
+
 tenant_collection = db['tenant']
 subscription_collection = db['subscription']
 subscription_group_collection = db['subscription-group']
@@ -115,8 +119,8 @@ class Group(Resource):
                                                                  "_id": 0}))
 
     def post(self):
-        pass
-
+        args = group_parser.parse_args()
+        return args
     def delete(self):
         pass
 
