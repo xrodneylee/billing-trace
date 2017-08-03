@@ -11,6 +11,7 @@ parser.add_argument('client_secret', required=True, type=str, help='client_secre
 
 tenant_collection = db['tenant']
 subscription_collection = db['subscription']
+subscription_group_collection = db['subscription-group']
 
 class Tenant(Resource):
     """Tenant restful api
@@ -95,6 +96,29 @@ class Subscription(Resource):
             subscription_collection.delete_one({"subscriptionId": subscription})
         else:
             return {"response": "subscriptionId doesn't exist."}
+
+    def put(self):
+        pass
+
+class Group(Resource):
+    """Subscription group
+    """
+    def get(self, group_name=None):
+        if group_name:
+            return dumps(subscription_group_collection.find_one({"groupName": group_name},
+                                                                {"groupName": 1,
+                                                                 "subscriptions": 1,
+                                                                 "_id": 0}))
+        else:
+            return dumps(subscription_group_collection.find({}, {"groupName": 1,
+                                                                 "subscriptions": 1,
+                                                                 "_id": 0}))
+
+    def post(self):
+        pass
+
+    def delete(self):
+        pass
 
     def put(self):
         pass
