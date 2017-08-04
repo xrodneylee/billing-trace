@@ -81,6 +81,8 @@ class Subscription(Resource):
                                                            "_id": 0}))
 
     def post(self):
+        """sync subscriptsions of tenant to mongodb
+        """
         # TODO: duplicate data
         args = parser.parse_args()
 
