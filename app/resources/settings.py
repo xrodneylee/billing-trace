@@ -126,7 +126,8 @@ class Group(Resource):
             return {"response": "groupName already exists."}
         else:
             subscription_group_collection.insert_one(args)
-            return dumps(subscription_group_collection.find_one(args, {"_id": 0}))
+            return dumps(subscription_group_collection.find_one({"groupName": args['groupName']},
+                                                                {"_id": 0}))
 
     def delete(self):
         pass
