@@ -11,7 +11,7 @@ parser.add_argument('client_secret', required=True, type=str, help='client_secre
 
 group_parser = reqparse.RequestParser(trim=True)
 group_parser.add_argument('groupName', required=True, type=str, help='groupName cannot be blank')
-group_parser.add_argument('subscriptions', required=True, type=str, help='subscriptions cannot be blank')
+group_parser.add_argument('subscriptions', required=True, type=str, help='subscriptions cannot be blank', action='append')
 
 tenant_collection = db['tenant']
 subscription_collection = db['subscription']
@@ -81,6 +81,7 @@ class Subscription(Resource):
                                                            "_id": 0}))
 
     def post(self):
+        # TODO: duplicate data
         args = parser.parse_args()
 
         credential = AzureCredential(args['tenant'], args['client_id'], args['client_secret'])
@@ -120,7 +121,13 @@ class Group(Resource):
 
     def post(self):
         args = group_parser.parse_args()
-        return args
+
+        if subscription_group_collection.find_one({"groupName": args['groupName']}):
+            return {"response": "groupName already exists."}
+        else:
+            subscription_group_collection.insert_one(args)
+            return dumps(subscription_group_collection.find_one(args, {"_id": 0}))
+
     def delete(self):
         pass
 

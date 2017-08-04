@@ -14,13 +14,12 @@ header = {
 
 data = {
     "groupName": "guanpu",
-    "subscriptions": [
-        {"subscription" : "subscription1"},
-        {"subscription" : "subscription2"}
-    ]
+    "subscriptions": ["coffee", "tea", "water"]
 }
-
-response = requests.post(url, json=json.dumps(data))
+# data = '{"groupName": "guanpu", "subscriptions": ["coffee", "tea", "water"]}'
+# print(json.loads(data))
+# response = requests.post(url, headers=header, json=data)
+response = requests.get(url)
 print(response.json())
 # response = requests.get(url)
 # print(response.json())
