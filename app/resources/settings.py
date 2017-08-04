@@ -94,9 +94,10 @@ class Subscription(Resource):
                 pass
             else:
                 subscription_collection.insert_one(document)
-        return dumps(subscription_collection.find({}, {"subscriptionId": 1,
-                                                       "displayName": 1,
-                                                       "_id": 0}))
+        return dumps(subscription_collection.find({"tenant": args['tenant']},
+                                                  {"subscriptionId": 1,
+                                                   "displayName": 1,
+                                                   "_id": 0}))
 
     def delete(self, subscription=None):
         if subscription:
