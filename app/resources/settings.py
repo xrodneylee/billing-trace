@@ -93,6 +93,7 @@ class Subscription(Resource):
             if subscription_collection.find_one({"subscriptionId": document['subscriptionId']}):
                 pass
             else:
+                document['tenant'] = args['tenant']
                 subscription_collection.insert_one(document)
         return dumps(subscription_collection.find({"tenant": args['tenant']},
                                                   {"subscriptionId": 1,
