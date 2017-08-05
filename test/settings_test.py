@@ -59,7 +59,7 @@ class TenantTestCase(unittest.TestCase):
     def test_tenant_delete(self):
         url = self.base_url + "/mock"
         response = requests.delete(url, headers=self.header)
-        self.assertFalse(response.json())
+        self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
