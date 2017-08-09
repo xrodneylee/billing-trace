@@ -1,5 +1,5 @@
 FROM python:3-alpine
-MAINTAINER guanpu.lee "xrodneylee@infinitiessoft.com"
+MAINTAINER guanpu.lee "xrodneylee@gmail.com"
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
