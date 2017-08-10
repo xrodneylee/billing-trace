@@ -3,6 +3,9 @@ from config import db
 from bson.json_util import dumps
 import configparser
 
+tenants = {}
+subscriptions = {}
+
 def get_ratecard():
     config = configparser.ConfigParser()
     config.read_file(open("secret.properties"))
@@ -13,11 +16,8 @@ def get_ratecard():
     subscription = config.get("Azure", "subscription")
     offer_durable_id = config.get("Azure", "offer_durable_id")
 
-    tenants = {}
-    subscriptions = {}
-
-    # print(dumps(db.tenant.find()))
-
     credential = AzureCredential(tenant, client_id, client_secret)
-    ratecard = AzureRatecard(credential.invoke().json()['access_token'], subscription, offer_durable_id)
-    print("@@@@@@@@@",ratecard.invoke().json())
+    ratecard = AzureRatecard(credential.invoke().json()['access_token'],
+                             subscription,
+                             offer_durable_id)
+    print(ratecard.invoke().json())
