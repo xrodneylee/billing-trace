@@ -5,6 +5,7 @@ import configparser
 
 tenants = {}
 subscriptions = {}
+azure_ratecard_collection = db['azure-ratecard']
 
 def get_ratecard():
     config = configparser.ConfigParser()
@@ -20,4 +21,7 @@ def get_ratecard():
     ratecard = AzureRatecard(credential.invoke().json()['access_token'],
                              subscription,
                              offer_durable_id)
-    print(ratecard.invoke().json())
+    # for document in ratecard.invoke().json()['Meters']:
+    azure_ratecard_collection.remove({})
+    azure_ratecard_collection.insert(ratecard.invoke().json()['Meters'], check_keys=False)
+    # print(ratecard.invoke().json())
