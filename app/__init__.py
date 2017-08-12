@@ -5,12 +5,14 @@ from .resources.mock import Mock
 from .resources.settings import Tenant
 from .resources.settings import Subscription
 from .resources.settings import Group
-from .scripts.import_data import get_ratecard
+from .scripts.import_data import get_ratecard, get_tenant
 
 app = Flask(__name__)
 api = Api(app)
 
-get_ratecard()
+# get_ratecard()
+get_tenant()
+
 # restful api
 api.add_resource(Mock, '/mock')
 
