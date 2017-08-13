@@ -1,6 +1,6 @@
 """ azure settings """
 from flask_restful import Resource, reqparse
-from config import db
+from config import tenant_collection, subscription_collection, subscription_group_collection
 from bson.json_util import dumps
 from ..services.azure import AzureCredential, AzureSubscription
 
@@ -13,9 +13,7 @@ group_parser = reqparse.RequestParser(trim=True)
 group_parser.add_argument('groupName', required=True, type=str, help='groupName cannot be blank')
 group_parser.add_argument('subscriptions', required=True, type=str, help='subscriptions cannot be blank', action='append')
 
-tenant_collection = db['tenant']
-subscription_collection = db['subscription']
-subscription_group_collection = db['subscription-group']
+
 
 class Tenant(Resource):
     """Tenant restful api
