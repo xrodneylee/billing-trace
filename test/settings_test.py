@@ -61,5 +61,36 @@ class TenantTestCase(unittest.TestCase):
         response = requests.delete(url, headers=self.header)
         self.assertEqual(response.status_code, 200)
 
+class SubscriptionTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.base_url = "http://localhost:5000/setting/subscription"
+        self.header = {
+            'Content-Type': 'application/json'
+            }
+
+        self.data = {
+            "tenant": "mock",
+            "client_id": "mockId",
+            "client_secret": "mockPasswrod"
+        }
+        # response = requests.post(self.base_url, headers=self.header, json=self.data)
+
+    def tearDown(self):
+        pass
+
+    def test_subscription_post(self):
+        response = requests.post(self.base_url, headers=self.header, json=self.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_subscription_get(self):
+        pass
+
+    def test_subscription_put(self):
+        pass
+
+    def test_subscription_delete(self):
+        pass
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)
