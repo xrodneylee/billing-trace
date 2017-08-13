@@ -8,9 +8,9 @@ data = []
 
 tenants = json.loads(AzureUtil.get_all_tenant())
 for tenant in tenants:
+    tenant['subscriptions'] = list()
     subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
     for subscription in subscriptions:
-        tenant['subscriptions'] = list()
         tenant['subscriptions'].append(subscription['subscriptionId'])
     data.append(tenant)
 
