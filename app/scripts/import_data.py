@@ -3,18 +3,18 @@ import json
 from ..common.util import AzureUtil
 # import configparser
 # import requests
+def job():
+    data = []
 
-data = []
+    tenants = json.loads(AzureUtil.get_all_tenant())
+    for tenant in tenants:
+        tenant['subscriptions'] = list()
+        subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
+        for subscription in subscriptions:
+            tenant['subscriptions'].append(subscription['subscriptionId'])
+        data.append(tenant)
 
-tenants = json.loads(AzureUtil.get_all_tenant())
-for tenant in tenants:
-    tenant['subscriptions'] = list()
-    subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
-    for subscription in subscriptions:
-        tenant['subscriptions'].append(subscription['subscriptionId'])
-    data.append(tenant)
-
-print(data)
+    print(data)
 # config = configparser.ConfigParser()
 # config.read_file(open("secret.properties"))
 
