@@ -23,5 +23,5 @@ api.add_resource(Tenant, '/setting/tenant', '/setting/tenant/<tenant>')
 api.add_resource(Subscription, '/setting/subscription', '/setting/subscription/<subscription>')
 api.add_resource(Group, '/setting/group', '/setting/group/<group_name>')
 
-sched.add_job(job, 'interval', seconds=3)
+sched.add_job(job, 'cron', hour=5)
 sched.start()

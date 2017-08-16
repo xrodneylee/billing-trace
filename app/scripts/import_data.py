@@ -11,7 +11,10 @@ def job():
         tenant['subscriptions'] = list()
         subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
         for subscription in subscriptions:
-            tenant['subscriptions'].append(subscription['subscriptionId'])
+            tenant['subscriptions'].append({
+                "subscription": subscription['subscriptionId'],
+                "offer_durable_id": subscription['offer_durable_id']
+            })
         data.append(tenant)
 
     print(data)

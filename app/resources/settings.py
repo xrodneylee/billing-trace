@@ -9,6 +9,10 @@ parser.add_argument('tenant', required=True, type=str, help='tenant cannot be bl
 parser.add_argument('client_id', required=True, type=str, help='client_id cannot be blank')
 parser.add_argument('client_secret', required=True, type=str, help='client_secret cannot be blank')
 
+subscription_parser = reqparse.RequestParser(trim=True)
+subscription_parser.add_argument('subscription', required=True, type=str, help='subscription cannot be blank')
+subscription_parser.add_argument('offer_durable_id', required=False, type=str)
+
 group_parser = reqparse.RequestParser(trim=True)
 group_parser.add_argument('groupName', required=True, type=str, help='groupName cannot be blank')
 group_parser.add_argument('subscriptions', required=True, type=str, help='subscriptions cannot be blank', action='append')
@@ -105,7 +109,18 @@ class Subscription(Resource):
             return {"response": "subscriptionId doesn't exist."}
 
     def put(self):
-        pass
+        args = subscription_parser.parse_args()
+
+        if subscription_collection.find_one({"subscriptionId": args['subscription']}):
+            subscription_collection.update_one({"subscriptionId": args['subscription']},
+                                               {"$set" : {
+                                                   'offer_durable_id': args['offer_durable_id']
+                                                   }
+                                               })
+            return dumps(subscription_collection.find_one({"subscriptionId": args['subscription']}, {"_id": 0}))
+        else:
+            return {"response": "subscriptionId doesn't exist."}
+
 
 class Group(Resource):
     """Subscription group

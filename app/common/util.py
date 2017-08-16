@@ -11,4 +11,5 @@ class AzureUtil():
     @staticmethod
     def get_all_subscription_by_tenant(tenant):
         return dumps(subscription_collection.find({"tenant": tenant}, {"subscriptionId": 1,
+                                                                       "offer_durable_id": 1,
                                                                        "_id": 0}))
