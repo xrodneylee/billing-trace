@@ -72,7 +72,9 @@ class SubscriptionTestCase(unittest.TestCase):
         self.data = {
             "tenant": "mock",
             "client_id": "mockId",
-            "client_secret": "mockPasswrod"
+            "client_secret": "mockPasswrod",
+            "subscription": "mock",
+            "offer_durable_id": "mock"
         }
         # response = requests.post(self.base_url, headers=self.header, json=self.data)
 
@@ -87,7 +89,8 @@ class SubscriptionTestCase(unittest.TestCase):
         pass
 
     def test_subscription_put(self):
-        pass
+        response = requests.put(self.base_url, headers=self.header, json=self.data)
+        self.assertEqual(response.status_code, 200)
 
     def test_subscription_delete(self):
         pass
