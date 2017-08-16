@@ -12,13 +12,13 @@ def job():
     for tenant in tenants:
         tenant['subscriptions'] = list()
         subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
+        credential = AzureCredential(tenant['tenant'], tenant['client_id'], tenant['client_secret'])
         for subscription in subscriptions:
             tenant['subscriptions'].append({
                 "subscription": subscription['subscriptionId'],
                 "offer_durable_id": subscription['offer_durable_id']
             })
 
-            credential = AzureCredential(tenant['tenant'], tenant['client_id'], tenant['client_secret'])
             ratecard = AzureRatecard(credential.invoke().json()['access_token'],
                                      subscription['subscriptionId'],
                                      subscription['offer_durable_id'])
