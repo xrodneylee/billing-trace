@@ -6,7 +6,7 @@ from .resources.mock import Mock
 from .resources.settings import Tenant
 from .resources.settings import Subscription
 from .resources.settings import Group
-from .scripts.import_data import job
+from .scripts.import_data import refresh_ratecard_job
 
 
 sched = BackgroundScheduler() 
@@ -23,5 +23,5 @@ api.add_resource(Tenant, '/setting/tenant', '/setting/tenant/<tenant>')
 api.add_resource(Subscription, '/setting/subscription', '/setting/subscription/<subscription>')
 api.add_resource(Group, '/setting/group', '/setting/group/<group_name>')
 
-sched.add_job(job, 'cron', hour=5)
+sched.add_job(refresh_ratecard_job, 'cron', hour=3)
 sched.start()
