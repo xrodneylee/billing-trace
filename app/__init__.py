@@ -6,7 +6,7 @@ from .resources.mock import Mock
 from .resources.settings import Tenant
 from .resources.settings import Subscription
 from .resources.settings import Group
-from .scripts.import_data import refresh_ratecard_job, refresh_usage_job
+from .jobs.import_data import refresh_ratecard_job, refresh_usage_job
 
 
 sched = BackgroundScheduler() 
