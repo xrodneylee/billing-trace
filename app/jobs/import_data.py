@@ -23,6 +23,7 @@ def refresh_ratecard_job():
                 offer_durable_id_set.add(subscription['offer_durable_id'])
 
 def refresh_usage_job():
+    # TODO subprocess
     tenants = json.loads(AzureUtil.get_all_tenant())
     for tenant in tenants:
         subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
