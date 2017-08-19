@@ -1,9 +1,10 @@
 from config import tenant_collection, subscription_collection,\
                    subscription_group_collection, azure_ratecard_collection
 from bson.json_util import dumps
+from datetime import datetime, timezone, timedelta
 
 class AzureUtil():
-    
+
     @staticmethod
     def get_all_tenant():
         return dumps(tenant_collection.find({}, {"_id": 0}))
@@ -13,3 +14,16 @@ class AzureUtil():
         return dumps(subscription_collection.find({"tenant": tenant}, {"subscriptionId": 1,
                                                                        "offer_durable_id": 1,
                                                                        "_id": 0}))
+
+class DatetimeUtil():
+
+    @staticmethod
+    def get_start_and_end_datetime():
+        tz = timezone(offset=timedelta(hours=8), name='Asia/Taipei')
+        return {
+            "reported_start_time": ((datetime.now(timezone.utc).astimezone(tz) - timedelta(hours=2))
+                                    .replace(minute=0, second=0, microsecond=0)).isoformat(),
+            "reported_end_time": ((datetime.now(timezone.utc).astimezone(tz) - timedelta(hours=1))
+                                  .replace(minute=0, second=0, microsecond=0)).isoformat()
+        }
+        

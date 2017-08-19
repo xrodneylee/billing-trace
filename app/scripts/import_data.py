@@ -1,7 +1,7 @@
 import json
-from config import azure_ratecard_collection
+from config import azure_ratecard_collection, azure_usage_collection
 from ..services.azure import AzureCredential, AzureRatecard, AzureUsage
-from ..common.util import AzureUtil
+from ..common.util import AzureUtil, DatetimeUtil
 
 
 def refresh_ratecard_job():
@@ -28,9 +28,12 @@ def refresh_usage_job():
         subscriptions = json.loads(AzureUtil.get_all_subscription_by_tenant(tenant['tenant']))
         credential = AzureCredential(tenant['tenant'], tenant['client_id'],
                                      tenant['client_secret']).invoke().json()['access_token']
+        reported_time = DatetimeUtil.get_start_and_end_datetime()
         for subscription in subscriptions:
             usage = AzureUsage(credential,
                                subscription['subscriptionId'],
-                               reported_start_time="DATETIME",
-                               reported_end_time="DATETIME")
+                               reported_start_time=reported_time['reported_start_time'],
+                               reported_end_time=reported_time['reported_end_time'])
+            azure_usage_collection.insert(usage.invoke().json()['value'],
+                                          check_keys=False)
             
