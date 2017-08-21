@@ -35,6 +35,9 @@ def refresh_usage_job():
                                subscription['subscriptionId'],
                                reported_start_time=reported_time['reported_start_time'],
                                reported_end_time=reported_time['reported_end_time'])
-            azure_usage_collection.insert(usage.invoke().json()['value'],
-                                          check_keys=False)
+            for document in usage.invoke().json()['value']:
+                ratecard = azure_ratecard_collection.find_one({"MeterId": document['properties']['meterId']})
+                # TODO exact calculation
+                document['cost'] = document['properties']['quantity'] * ratecard['MeterRates']['0']
+                azure_usage_collection.insert(document, check_keys=False)
             
