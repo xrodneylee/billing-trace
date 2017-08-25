@@ -26,8 +26,8 @@ LOGGING_CONFIG = {
             'level': 'DEBUG',
             'formatter': 'simpleFormatter',
             'filename': 'azure-billing.log',
-            'maxBytes': 1024,
-            'backupCount': 3
+            'maxBytes': 10240,
+            'backupCount': 1
         }
     },
     'formatters': {
