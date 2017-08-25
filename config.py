@@ -1,3 +1,4 @@
+import logging, logging.config
 import pymongo
 
 client = pymongo.MongoClient("mongodb://xrodneylee:xrodneylee@" \
@@ -14,3 +15,33 @@ subscription_collection = db['subscription']
 subscription_group_collection = db['subscription-group']
 azure_ratecard_collection = db['azure-ratecard']
 azure_usage_collection = db['azure-usage']
+
+
+# logging
+LOGGING_CONFIG = {
+    'version': 1,
+    'handlers': {
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'DEBUG',
+            'formatter': 'simpleFormatter',
+            'filename': 'azure-billing.log',
+            'maxBytes': 1024,
+            'backupCount': 3
+        }
+    },
+    'formatters': {
+        'simpleFormatter': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        }
+    },
+    'loggers': {
+        'azure_billing': {
+            'level': 'DEBUG',
+            'handlers': ['file']
+        }
+    }
+}
+
+logging.config.dictConfig(LOGGING_CONFIG)
+logger = logging.getLogger('azure_billing')
