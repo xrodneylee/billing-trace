@@ -1,27 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
 {% block head %}
-<title>{% block title %}Welcome{% endblock %} | Flask (A Python Microframework)</title>
+<title>{% block title %}Welcome{% endblock %} | Azure Billing Backend </title>
 <meta charset=utf-8>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 {% endblock %}
-<div class=container>
-  <!-- {% block body_title %}
-    <h1><span>{{ self.title() }}</span></h1>
+<div class="container">
+  {% block body %}
   {% endblock %}
-  <p class=nav>
-    <a href="{{ url_for('general.index') }}">overview</a> //
-    <a href="{{ url_for('docs.index') }}">docs</a> //
-    <a href="{{ url_for('community.index') }}">community</a> //
-    <a href="{{ url_for('snippets.index') }}">snippets</a> //
-    <a href="{{ url_for('extensions.index') }}">extensions</a>
-  {% for message in get_flashed_messages() %}
-    <p class=message>{{ message }}
-  {% endfor %}
-  {% block body %}{% endblock %} -->
-  <p class=footer>
-    &copy; Copyright 2017 by guanpu lee</p>
 </div>
-</html>
