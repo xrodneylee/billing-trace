@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-{% block head %}
-<title>{% block title %}Welcome{% endblock %} | Azure Billing Backend </title>
-<meta charset=utf-8>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-{% endblock %}
-<div class="container">
-  {% block body %}
+<html class="h-100">
+  {% block head %}
+  <title>{% block title %}Welcome{% endblock %} | Azure Billing Backend </title>
+  <meta charset=utf-8>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   {% endblock %}
-</div>
+  <body class="h-100">
+    <div class="container h-100">
+      {% block body %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
