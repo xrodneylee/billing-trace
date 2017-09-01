@@ -20,3 +20,7 @@ def index():
 @mod.route('/data-import')
 def data_import():
     return render_template('general/import.html')
+
+@mod.route('/keypair')
+def keypair():
+    return render_template('general/keypair.html')
