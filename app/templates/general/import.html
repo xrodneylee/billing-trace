@@ -1,0 +1,15 @@
+{% extends "general/index.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body %}
+    {{ super() }}
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="card w-50" style="background-color:#222;">
+            <div class="card-body">
+                <form action="/dashboard" method="post">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

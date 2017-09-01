@@ -4,30 +4,23 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
 {% endblock %}
 {% block body %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <i class="fa fa-usd" aria-hidden="true"></i>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+    <nav class="navbar navbar-expand-lg"  style="background-color:#222;">
+        <div class="container h-100">
+            <a class="navbar-brand" href="/dashboard">
+                <img src="{{ url_for('static', filename='css/pig.png') }}" width="40" height="40">
+            </a>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav  mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/data-import" style="color:#cfd2da"><i class="fa fa-rocket" aria-hidden="true"></i>&nbsp; DataImport</a>
+                    </li>
+                    &nbsp;&nbsp;
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color:#cfd2da"><i class="fa fa-key" aria-hidden="true"></i>&nbsp; Keypair</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 {% endblock %}

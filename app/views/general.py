@@ -9,9 +9,14 @@ def login():
 
 @mod.route('/dashboard', methods=['POST'])
 def index():
-    user = request.form.get('account')
+    user = request.form.get('username')
     password = request.form.get('password')
-    if user != '@dmin' and password != "P@ssword":
+    print(user, password)
+    if user != '@dmin' or password != "P@ssword":
         return redirect(url_for("general.login", warning="block"))
     else:
         return render_template('general/index.html')
+
+@mod.route('/data-import')
+def data_import():
+    return render_template('general/import.html')

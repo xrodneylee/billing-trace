@@ -4,17 +4,21 @@
 {% endblock %}
 {% block body %}
     <div class="row h-100 justify-content-center align-items-center">
-        <form class="col-3" action="/dashboard" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="account" placeholder="Enter account">
+        <div class="card w-25" style="background-color:#222;">
+            <div class="card-body">
+                <form action="/dashboard" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="alert alert-danger" role="alert" style="display:{{warning}}">
+                        permission denied
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <div class="alert alert-danger" role="alert" style="display:{{warning}}">
-                permission denied
-            </div>
-        </form>
+        </div>
     </div>
 {% endblock %}
