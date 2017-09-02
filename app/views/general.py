@@ -1,5 +1,7 @@
+import json
 from flask import Blueprint, render_template, session, redirect, url_for, \
      request, flash, g, jsonify, abort
+from ..common.util import AzureUtil
 
 mod = Blueprint('general', __name__)
 
@@ -19,7 +21,8 @@ def index():
 
 @mod.route('/data-import')
 def data_import():
-    return render_template('general/import.html')
+    tenants = json.loads(AzureUtil.get_all_tenant())
+    return render_template('general/import.html', tenants=tenants)
 
 @mod.route('/keypair')
 def keypair():
