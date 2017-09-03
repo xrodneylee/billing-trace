@@ -13,7 +13,6 @@ def login():
 def index():
     user = request.form.get('username')
     password = request.form.get('password')
-    print(user, password)
     if user != '@dmin' or password != "P@ssword":
         return redirect(url_for("general.login", warning="block"))
     else:

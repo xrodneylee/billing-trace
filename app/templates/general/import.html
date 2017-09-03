@@ -16,6 +16,37 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold;color:white;font-family:微軟正黑體">訂用帳戶</label>
+                        <select class="form-control" style="color:white;background-color:#1C2531">
+                            {% for tenant in tenants %}
+                            <option>{{ tenant.tenant }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold;color:white;font-family:微軟正黑體">起始時間</label>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="date" class="form-control" name="startDate" style="background-color:#1C2531">
+                            </div>
+                            <div class="col">
+                                <input type="time" class="form-control" name="startTime" style="background-color:#1C2531">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold;color:white;font-family:微軟正黑體">結束時間</label>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="date" class="form-control" name="endDate" style="background-color:#1C2531">
+                            </div>
+                            <div class="col">
+                                <input type="time" class="form-control" name="endTime" style="background-color:#1C2531">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
