@@ -6,6 +6,9 @@
             $("#btn").on('click', function(){
                 alert('test')
             })
+            $.getJSON( "http://localhost:5000/setting/tenant", function( data ) {
+                console.log(data)
+            });
         })
     </script>
 {% endblock %}
