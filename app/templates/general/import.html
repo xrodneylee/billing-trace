@@ -4,10 +4,26 @@
     <script>
         $(document).ready(function(){
             $("#btn").on('click', function(){
-                alert('test')
+                // TODO: send form
             })
-            $.getJSON( "http://localhost:5000/setting/tenant", function( data ) {
-                console.log(data)
+
+            $.getJSON( "/setting/tenant", function(data) {
+                let list=''
+                $.each(JSON.parse(data), function(i, item) {
+                    list = `${list}<option>${item.tenant}</option>`
+                })
+                $("#tenants").html(list)
+                $("#tenants").trigger("change");
+            });
+
+            $("#tenants").change(function() {
+                $.getJSON( "/setting/subscription/"+$("#tenants").val(), function(data) {
+                    let list=''
+                    $.each(JSON.parse(data), function(i, item){
+                        list = `${list}<option>${item.subscriptionId}</option>`
+                    })
+                    $("#subscriptions").html(list)
+                });
             });
         })
     </script>
@@ -20,19 +36,11 @@
                 <form>
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">租戶</label>
-                        <select class="form-control" style="color:white;background-color:#1C2531">
-                            {% for tenant in tenants %}
-                            <option>{{ tenant.tenant }}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="tenants" class="form-control" style="color:white;background-color:#1C2531"></select>
                     </div>
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">訂用帳戶</label>
-                        <select class="form-control" style="color:white;background-color:#1C2531">
-                            {% for tenant in tenants %}
-                            <option>{{ tenant.tenant }}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="subscriptions" class="form-control" style="color:white;background-color:#1C2531"></select>
                     </div>
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">起始時間</label>
