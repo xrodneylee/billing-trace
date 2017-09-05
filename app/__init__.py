@@ -19,6 +19,13 @@ api.add_resource(Tenant, '/setting/tenant', '/setting/tenant/<tenant>')
 api.add_resource(Subscription, '/setting/subscription', '/setting/subscription/<subscription>')
 api.add_resource(Group, '/setting/group', '/setting/group/<group_name>')
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
+
 # scheduler
 sched = BackgroundScheduler()
 sched.add_job(refresh_ratecard_job, 'cron', hour=3)
