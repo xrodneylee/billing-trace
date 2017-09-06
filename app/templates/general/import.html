@@ -17,7 +17,7 @@
             });
 
             $("#tenants").change(function() {
-                $.getJSON( "/setting/subscription/"+$("#tenants").val(), function(data) {
+                $.getJSON( "/data/" + $("#tenants").val() + "/subscriptions", function(data) {
                     let list=''
                     $.each(JSON.parse(data), function(i, item){
                         list = `${list}<option>${item.subscriptionId}</option>`
