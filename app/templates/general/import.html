@@ -3,26 +3,48 @@
     {{ super() }}
     <script>
         $(document).ready(function(){
-            $("#btn").on('click', function(){
-                // TODO: send form
-            })
-
+            // $("#btn").on('click', function(event){
+            //     event.preventDefault();
+            //     $("#searchForm").find( "input[name='startDate']" ).val();
+            //     $("#searchForm").find( "input[name='startTime']" ).val();
+            //     $("#searchForm").find( "input[name='endDate']" ).val();
+            //     $("#searchForm").su.find( "input[name='endTime']" ).val();
+            // })
+            $("#searchForm").submit(function(e){
+                var postData = $(this).serializeArray();
+                console.log(postData)
+                // $.ajax({
+                //     url : formURL,
+                //     type: "POST",
+                //     data : postData,
+                //     success:function(data, textStatus, jqXHR) 
+                //     {
+                //         //data: return data from server
+                //     },
+                //     error: function(jqXHR, textStatus, errorThrown) 
+                //     {
+                //         //if fails      
+                //     }
+                // });
+                e.preventDefault(); //STOP default action
+                e.unbind(); //unbind. to stop multiple form submit.
+            });
             $.getJSON( "/setting/tenant", function(data) {
                 let list=''
                 $.each(JSON.parse(data), function(i, item) {
-                    list = `${list}<option>${item.tenant}</option>`
+                    list = `${list}<option>${item.tenant}</option>`;
                 })
-                $("#tenants").html(list)
+                $("#tenants").html(list);
                 $("#tenants").trigger("change");
             });
 
             $("#tenants").change(function() {
                 $.getJSON( "/data/" + $("#tenants").val() + "/subscriptions", function(data) {
-                    let list=''
+                    let list='';
                     $.each(JSON.parse(data), function(i, item){
-                        list = `${list}<option>${item.subscriptionId}</option>`
+                        list = `${list}<option>${item.subscriptionId}</option>`;
                     })
-                    $("#subscriptions").html(list)
+                    $("#subscriptions").html(list);
                 });
             });
         })
@@ -33,14 +55,14 @@
     <div class="row justify-content-center mt-3">
         <div class="card w-50" style="background-color:#212C3B;">
             <div class="card-body">
-                <form>
+                <form id="searchForm">
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">租戶</label>
-                        <select id="tenants" class="form-control" style="color:white;background-color:#1C2531"></select>
+                        <select id="tenants" name="tenant" class="form-control" style="color:white;background-color:#1C2531"></select>
                     </div>
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">訂用帳戶</label>
-                        <select id="subscriptions" class="form-control" style="color:white;background-color:#1C2531"></select>
+                        <select id="subscriptions" name="subscription" class="form-control" style="color:white;background-color:#1C2531"></select>
                     </div>
                     <div class="form-group">
                         <label style="font-weight: bold;color:white;font-family:微軟正黑體">起始時間</label>
