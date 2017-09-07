@@ -1,7 +1,7 @@
 from config import tenant_collection, subscription_collection,\
                    subscription_group_collection, azure_ratecard_collection
 from bson.json_util import dumps
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date, time
 
 class AzureUtil():
 
@@ -28,10 +28,10 @@ class DatetimeUtil():
         }
 
     @staticmethod
-    def datetime_converter(date, time):
+    def datetime_converter(date_str, time_str):
         tz = timezone(offset=timedelta(hours=8), name='Asia/Taipei')
-        year, month, day = (int(item) for item in str(date).split('-'))
-        hour, minutes = (int(item) for item in str(time).split(':'))
+        year, month, day = (int(item) for item in date_str.split('-'))
+        hour, minutes = (int(item) for item in time_str.split(':'))
         d = date(year, month, day)
         t = time(hour, minutes, tzinfo=tz)
         return datetime.combine(d, t).replace(minute=0, second=0, microsecond=0).isoformat()
