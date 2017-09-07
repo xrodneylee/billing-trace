@@ -26,4 +26,12 @@ class DatetimeUtil():
             "reported_end_time": ((datetime.now(timezone.utc).astimezone(tz) - timedelta(hours=1))
                                   .replace(minute=0, second=0, microsecond=0)).isoformat()
         }
-        
+
+    @staticmethod
+    def datetime_converter(date, time):
+        tz = timezone(offset=timedelta(hours=8), name='Asia/Taipei')
+        year, month, day = (int(item) for item in str(date).split('-'))
+        hour, minutes = (int(item) for item in str(time).split(':'))
+        d = date(year, month, day)
+        t = time(hour, minutes, tzinfo=tz)
+        return datetime.combine(d, t).replace(minute=0, second=0, microsecond=0).isoformat()
