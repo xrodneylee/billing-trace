@@ -10,6 +10,10 @@ class AzureUtil():
         return dumps(tenant_collection.find({}, {"_id": 0}))
 
     @staticmethod
+    def get_tenant(tenant):
+        return dumps(tenant_collection.find({"tenant": tenant}, {"_id": 0}))
+
+    @staticmethod
     def get_all_subscription_by_tenant(tenant):
         return dumps(subscription_collection.find({"tenant": tenant}, {"subscriptionId": 1,
                                                                        "offer_durable_id": 1,
@@ -34,4 +38,4 @@ class DatetimeUtil():
         hour, minutes = (int(item) for item in time_str.split(':'))
         d = date(year, month, day)
         t = time(hour, minutes, tzinfo=tz)
-        return datetime.combine(d, t).replace(minute=0, second=0, microsecond=0).isoformat()
+        return datetime.combine(d, t).replace(minute=0, second=0, microsecond=0)
