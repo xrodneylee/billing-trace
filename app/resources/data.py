@@ -1,7 +1,8 @@
 import json
 from flask import request
 from flask_restful import Resource, reqparse
-from config import tenant_collection, subscription_collection, subscription_group_collection
+from config import tenant_collection, subscription_collection, subscription_group_collection,\
+                    azure_ratecard_collection, azure_usage_collection
 from ..services.azure import AzureCredential, AzureRatecard, AzureUsage
 from bson.json_util import dumps
 from ..common.util import AzureUtil, DatetimeUtil
@@ -19,12 +20,13 @@ class HistoryDataImport(Resource):
         subscription = request.form['subscription']
         start = DatetimeUtil.datetime_converter(request.form['startDate'], request.form['startTime'])
         end = DatetimeUtil.datetime_converter(request.form['endDate'], request.form['endTime'])
-        tenant_detail = json.loads(AzureUtil.get_tenant(tenant))
+        tenant_detail = json.loads(AzureUtil.get_tenant(tenant))[0]
         print(tenant_detail)
         credential = AzureCredential(tenant_detail['tenant'], tenant_detail['client_id'],
                                      tenant_detail['client_secret']).invoke().json()['access_token']
         while start < end:
             temp = (start + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+            print(start, temp)
             usage = AzureUsage(credential,
                                subscription,
                                reported_start_time=start.isoformat(),
@@ -35,4 +37,3 @@ class HistoryDataImport(Resource):
                 document['cost'] = document['properties']['quantity'] * ratecard['MeterRates']['0']
                 azure_usage_collection.insert(document, check_keys=False)
             start = temp
-            print(start, end)
